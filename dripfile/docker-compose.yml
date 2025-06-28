@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  server_1:
+    build: ./server_1
+    ports:
+      - "5001:5000"
+    container_name: server_1
+    volumes:
+      - ./server_1:/app
+      - uploads_data:/app/uploads
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=dripfile
+    depends_on:
+      - db
+    networks:
+      - dripnet
+
+  db:
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile.mysql
+    container_name: dripfile-db-1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dripfile
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mysql/init-repl.sql:/docker-entrypoint-initdb.d/init-repl.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - dripnet
+
+  nginx:
+    image: nginx:latest
+    container_name: dripfile-nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80:80"
+    depends_on:
+      - server_1
+    networks:
+      - dripnet
+
+volumes:
+  uploads_data:
+
+networks:
+  dripnet:
+    driver: bridge

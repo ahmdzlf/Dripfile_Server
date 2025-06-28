@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  server_2:
+    build: ./server_2
+    ports:
+      - "5002:5000"  # Bebas, asal tidak konflik
+    container_name: server_2
+    volumes:
+      - ./server_2:/app
+      - uploads_data:/app/uploads
+    environment:
+      - DB_HOST=192.168.18.35  # IP VM Ubuntu sendiri
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=dripfile
+    depends_on:
+      - db2
+    networks:
+      - dripnet
+
+  db2:
+    build:
+      context: ./mysql2
+      dockerfile: Dockerfile.mysql
+    container_name: dripfile-db-2
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dripfile
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mysql2/init-repl.sql:/docker-entrypoint-initdb.d/init-repl.sql
+    networks:
+      - dripnet
+
+volumes:
+  uploads_data:
+
+networks:
+  dripnet:
+    driver: bridge

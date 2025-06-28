@@ -1,0 +1,9 @@
+FROM mysql:8.0
+
+# Copy konfigurasi MySQL
+COPY my.cnf /etc/mysql/conf.d/my.cnf
+
+# Pastikan file .sql dijalankan saat inisialisasi (jangan lupa tambahkan init.sql dan init-repl.sql dari luar)
+# Dockerfile ini tidak menambahkan skrip init apa pun karena docker-compose sudah mount file SQL-nya
+
+EXPOSE 3306

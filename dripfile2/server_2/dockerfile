@@ -1,0 +1,21 @@
+# Gunakan Python image
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements dan install dependencies
+COPY requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy seluruh project
+COPY . .
+
+# Buat folder upload
+RUN mkdir -p uploads
+
+# Expose port Flask
+EXPOSE 5000
+
+# Jalankan aplikasi
+CMD ["python", "app.py"]

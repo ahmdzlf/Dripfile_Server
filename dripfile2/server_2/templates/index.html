@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DripFile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='ud.css') }}">
+</head>
+<body>
+    <div class="page-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div id="flash-container">
+            {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <header>
+            <div class="logo">
+                <img src="{{ url_for('static', filename='logo_dripfile.png') }}" alt="Logo">
+                <span>DripFile</span>
+            </div>
+            <div class="admin">
+                <a href="{{ url_for('login') }}">Admin</a>
+            </div>
+        </header>
+
+        <main class="content-wrap">
+            <h1>Welcome To DripFile</h1>
+
+            <div class="upload-box">
+                <form action="/" method="POST" enctype="multipart/form-data">
+                    <div class="upload-area" id="uploadArea">
+                        <img src="{{ url_for('static', filename='upload.svg') }}" alt="Upload Icon" width="30" height="30" />
+                        <p>Drag your file(s) to start uploading</p>
+                        <div class="separator">OR</div>
+
+                        <input type="file" name="file" id="fileInput" hidden multiple />
+                        <label for="fileInput" class="btn-secondary" id="fileLabel">Browse files</label>
+                        <div id="filePreviewContainer" class="file-preview" style="display: none;"></div>
+                    </div>
+
+                    <button class="btn" type="submit">Upload</button>
+                </form>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Uploaded</th>
+                        <th>Size</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in files %}
+                    <tr>
+                        <td>{{ file.name }}</td>
+                        <td>{{ file.upload_date.strftime('%b %d, %Y') }}</td>
+                        <td>{{ file.size }}</td>
+                        <td><a href="/download/{{ file.name }}" class="btn download-btn">Download</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </main>
+
+        <footer class="site-footer">
+            <p>Copyright ©2025 by Threegroups</p>
+        </footer>
+    </div>
+
+<script>
+const fileInput = document.getElementById('fileInput');
+const fileLabel = document.getElementById('fileLabel');
+const previewContainer = document.getElementById('filePreviewContainer');
+
+fileInput.addEventListener('change', function () {
+    const files = this.files;
+    if (files.length > 0) {
+        const fileList = Array.from(files).map((file, index) => `
+            <div class="preview-item" data-index="${index}">
+                <span>📄 ${file.name}</span>
+                <span class="remove-file" onclick="removeSelectedFile(${index})">&times;</span>
+            </div>
+        `).join('');
+        previewContainer.innerHTML = fileList;
+        previewContainer.style.display = 'block';
+        fileLabel.style.display = 'none';
+    } else {
+        previewContainer.style.display = 'none';
+        fileLabel.style.display = 'inline-block';
+    }
+});
+
+function removeSelectedFile(index) {
+    fileInput.value = '';
+    previewContainer.innerHTML = '';
+    previewContainer.style.display = 'none';
+    fileLabel.style.display = 'inline-block';
+}
+</script>
+
+</body>
+</html>

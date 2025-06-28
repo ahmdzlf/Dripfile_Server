@@ -1,0 +1,241 @@
+/* Reset dasar dan layout halaman */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f9f9f9;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content-wrap {
+    flex: 1;
+}
+
+/* Header / Navbar */
+header {
+    background: #243c58;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo img {
+    width: 40px;
+    margin-right: 10px;
+}
+
+.admin a {
+    color: white;
+    font-weight: bold;
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+.admin a:hover,
+.admin a:active,
+.admin a:visited,
+.admin a:focus {
+    color: white;
+    text-decoration: underline;
+}
+
+/* Main */
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Atau center kalau mau di tengah layar penuh */
+    padding: 40px 20px;
+    text-align: center;
+}
+
+main h1 {
+    margin-bottom: 30px;
+    font-size: 36px;
+    text-align: center;
+}
+
+/* Upload Box */.upload-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.upload-area {
+    border: 2px dashed #a1b2c9;
+    border-radius: 8px;
+    padding: 40px;
+    background-color: #fff;
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+.upload-area img {
+    margin-bottom: 12px;
+}
+
+.upload-area p {
+    font-size: 16px;
+    margin: 8px 0;
+    font-weight: 500;
+    color: #333;
+}
+
+.separator {
+    margin: 10px 0;
+    color: #999;
+    font-size: 14px;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #f1f4fa;
+    color: #1a1a1a;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    margin-top: 6px;
+}
+
+.btn-secondary:hover {
+    background-color: #e1e7f0;
+}
+
+.btn {
+    background-color: #0a2e63;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.btn:hover {
+    background-color: #0a2551;
+}
+
+/* Table */
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 85%;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+th, td {
+    padding: 14px 20px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+th {
+    background: #f3f3f3;
+    font-weight: 600;
+}
+
+/* Download button */
+.download-btn {
+    background-color: #0a2f5c;
+}
+
+.download-btn:hover {
+    background-color: #17467a;
+}
+
+/* File Preview */
+.file-preview {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.preview-item {
+    display: inline-flex;
+    align-items: center;
+    background-color: #f9fbfd;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 15px;
+    color: #0F3460;
+    margin-top: 10px;
+    border: 1.5px solid #0F3460;
+    margin-right: 10px;
+    gap: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.remove-file {
+    cursor: pointer;
+    font-weight: bold;
+    color: #0F3460;
+    font-size: 16px;
+}
+
+.remove-file:hover {
+    color: #c0392b;
+}
+
+/* Flash Message Notification */
+#flash-container {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+}
+
+.flash {
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    background-color: #4BB543; /* hijau sukses */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: fadeOut 4s forwards;
+    text-align: center;
+}
+
+@keyframes fadeOut {
+    0%   { opacity: 1; }
+    80%  { opacity: 1; }
+    100% { opacity: 0; display: none; }
+}
+
+/* Footer */
+.site-footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #0f3460;
+    color: white;
+    font-size: 0.9rem;
+}
